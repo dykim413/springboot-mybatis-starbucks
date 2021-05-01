@@ -4,6 +4,7 @@ package com.cos.starbucks.controller;
 
 import javax.validation.Valid;
 
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,8 @@ import com.cos.starbucks.model.User;
 import com.cos.starbucks.repository.UserRepository;
 import com.cos.starbucks.security.MyUserDetails;
 import com.cos.starbucks.util.Script;
+
+import java.sql.SQLException;
 
 
 @Controller
@@ -47,11 +50,15 @@ public class UserController {
 		String rawPassword = user.getPassword();
 		String encPassword = passwordEncoder.encode(rawPassword);
 		String username=user.getUsername();
-		int result=uRepo.usernameCheck(username);
-		if(result==0) {
+		int result = uRepo.usernameCheck(username);
+		if(result == 0) {
 			user.setPassword(encPassword);
-			uRepo.join(user);
-			
+			try {
+			    uRepo.join(user);
+            } catch (SQLException e) {
+			    e.printStackTrace();
+            }
+
 			return Script.alertAndHref("가입완료", "/user/login");
 		}else
 		return Script.alertAndHref("중복확인 해주세요.","/user/join2");

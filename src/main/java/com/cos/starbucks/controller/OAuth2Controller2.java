@@ -3,6 +3,7 @@ package com.cos.starbucks.controller;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
@@ -72,7 +73,11 @@ public class OAuth2Controller2 {
 		user.setProvider("naver");
 		user.setProviderId(providerId);
 
-		mUserRepo.join(user);
+		try {
+            mUserRepo.join(user);
+        } catch ( SQLException e) {
+		    e.printStackTrace();
+        }
 
 		// 로그인 처리
 		// 해당 아이디로 로그인을 위해 강제 세션 부여

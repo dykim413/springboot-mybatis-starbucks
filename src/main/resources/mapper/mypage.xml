@@ -14,6 +14,10 @@
 		resultType="com.cos.starbucks.model.MyBeverage">
 		select * from myBeverage where userId= #{?}
 	</select>
+
+    <select id="findByUserIdFood" resultType="com.cos.starbucks.model.MyFood">
+        select * from myFood where userId= #{?}
+    </select>
 	
 	<select id="findByUserIdCard"
 		resultType="com.cos.starbucks.model.User_card">
@@ -79,6 +83,11 @@
 		insert into myCoffee(coffeeId,userId,coffeeName,createDate,price)
 		values(#{coffeeId},#{userId},#{coffeeName},now(),#{price})
 	</insert>
+
+    <insert id="foodSave">
+        insert into myFood(foodId,userId,foodName,createDate,price)
+        values(#{foodId},#{userId},#{foodName},now(),#{price})
+    </insert>
 	
 	<insert id="bevSave">
 		insert into myBeverage(beverageId,userId,beverageName,createDate,price)
@@ -144,6 +153,10 @@
 	<select id="AfindMyCoffee" resultType="Integer">
 		select count(*) from myCoffee where userId=#{userId} and coffeeId=#{coffeeId}
 	</select>
+
+    <select id="AfindMyFood" resultType="Integer">
+        select count(*) from myFood where userId=#{userId} and foodId=#{foodId}
+    </select>
 	
 	<delete id="AdeleteMyBeverage">
 		delete from myBeverage where userId=#{userId} and beverageId=#{beverageId}

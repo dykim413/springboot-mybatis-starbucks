@@ -1,12 +1,15 @@
 package com.cos.starbucks.repository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.cos.starbucks.model.User;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserRepository {
 	User findByUsername(String username);
-	void join(User user);
+	void join(User user) throws SQLException;
 	User findByProviderAndProviderId(String provider, String providerId);
 	void changePw(String password);
 	void moneyUp(int money,int id);

@@ -26,6 +26,8 @@ import com.cos.starbucks.repository.UserRepository;
 import com.cos.starbucks.security.MyUserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.sql.SQLException;
+
 @Controller
 public class OAuth2Controller {
 	
@@ -61,9 +63,13 @@ public class OAuth2Controller {
 		String providerId = (String)session.getAttribute("providerId");
 		user.setProvider("kakao");
 		user.setProviderId(providerId);
-		
-		mUserRepo.join(user);
-		
+
+		try {
+		    mUserRepo.join(user);
+        } catch (SQLException e) {
+		    e.printStackTrace();
+        }
+
 		//로그인 처리
 		// 해당 아이디로 로그인을 위해 강제 세션 부여
          UserDetails userDetail =

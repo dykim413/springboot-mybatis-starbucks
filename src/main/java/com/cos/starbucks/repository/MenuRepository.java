@@ -30,6 +30,7 @@ public interface MenuRepository {
 	List<Food> findFruit();
 	List<Food> findSnack();
 	List<Food> findIce();
+    List<Food> findByFoodIds(List<Integer> ids);
 	
 	List<Card> findAllCard();
 	

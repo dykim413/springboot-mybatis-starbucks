@@ -2,21 +2,19 @@ package com.cos.starbucks.repository;
 
 import java.util.List;
 
-import com.cos.starbucks.model.Trade;
-import com.cos.starbucks.model.Cart;
-import com.cos.starbucks.model.MyBeverage;
-import com.cos.starbucks.model.MyCoffee;
-import com.cos.starbucks.model.User_card;
+import com.cos.starbucks.model.*;
 
 
 public interface MypageRepository {
 	
 	List<MyBeverage> findByUserIdBev(int id);
+	List<MyFood> findByUserIdFood(int id);
 	List<MyCoffee> findByUserId(int id);
 	User_card findByUserIdCard(int id);
 	void updatePoint(int id,int point);
 	int countByUserId(int id);
 	void coffeeSave(int coffeeId,int userId,String coffeeName,int price);
+	void foodSave(int foodId,int userId,String foodName,int price);
 	void bevSave(int bevId,int userId,String bevName,int price);
 	void cardSave(int cardId,int userId,String cardName,String cardImage);
 	int deleteCoffee(int id);
@@ -50,6 +48,7 @@ public interface MypageRepository {
 
 	int AfindMyBeverage(MyBeverage myBeverage);
 	int AfindMyCoffee(MyCoffee myCoffee);
+	int AfindMyFood(MyFood myFood);
 	void AdeleteMyBeverage(MyBeverage myBeverage);
 	void AdeleteMyCoffee(MyCoffee myCoffee);
 }

@@ -52,7 +52,7 @@ public class AdminController {
 
 	@GetMapping("")
 	public String admin(@AuthenticationPrincipal MyUserDetails userDetail, Model model) {
-		if (userDetail.getUser().getUsername().equals("admin")) {
+	//	if (userDetail.getUser().getUsername().equals("admin")) {
 			List<User> userList = uRepo.findAll();
 			int sum=uRepo.findSum();
 			int count=uRepo.findCount();
@@ -60,9 +60,9 @@ public class AdminController {
 			model.addAttribute("sum",sum);
 			model.addAttribute("count",count);
 			return "admin/index";
-		}
+	//	}
 
-		return null;
+	//	return null;
 	}
 
 	@GetMapping("/tables")

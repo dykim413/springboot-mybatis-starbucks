@@ -1,9 +1,11 @@
 package com.cos.starbucks.appController;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,25 +25,39 @@ import com.cos.starbucks.security.MyUserDetailsService;
 @RequestMapping("/android")
 public class AUserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(AUserController.class);
+
+	private final UserRepository uRepo;
+
+	private final BCryptPasswordEncoder passwordEncoder;
+
+	private final MyUserDetailsService mMyUserDetailsService;
+
 	@Autowired
-	private UserRepository uRepo;
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-	@Autowired
-	private MyUserDetailsService mMyUserDetailsService;
+	public AUserController( UserRepository uRepo, BCryptPasswordEncoder passwordEncoder, MyUserDetailsService mMyUserDetailsService) {
+	    this.uRepo = uRepo;
+	    this.passwordEncoder = passwordEncoder;
+	    this.mMyUserDetailsService = mMyUserDetailsService;
+    }
 	
 	@PostMapping("/joinProc")
 	public String create(User user) {
 		String rawPassword = user.getPassword();
 		String encPassword = passwordEncoder.encode(rawPassword);
 		user.setPassword(encPassword);
+
 		try {
-			uRepo.join(user);	
-		} catch (Exception e) {
-			return "join fail";
+            uRepo.join(user);
+        } catch (SQLException e) {
+            System.out.println("james error code : " + e.getErrorCode());
+        } catch (Exception e) {
+		    if( e.getMessage().contains("Duplicate entry") ) {
+		        return "exists";
+            }
+			return "fail";
 		}
-		
-		return "join success";
+
+		return "success";
 	}
 	
 	@PostMapping("/kakaoJoinProc")

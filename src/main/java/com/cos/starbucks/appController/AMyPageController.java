@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.cos.starbucks.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,13 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cos.starbucks.model.Beverage;
-import com.cos.starbucks.model.Coffee;
-import com.cos.starbucks.model.MyBeverage;
-import com.cos.starbucks.model.MyCoffee;
-import com.cos.starbucks.model.Trade;
-import com.cos.starbucks.model.User;
-import com.cos.starbucks.model.User_card;
 import com.cos.starbucks.repository.CoffeeRepository;
 import com.cos.starbucks.repository.MenuRepository;
 import com.cos.starbucks.repository.MypageRepository;
@@ -65,15 +59,27 @@ public class AMyPageController {
 					myBeverageIdList.add(myBeverage.getBeverageId()); 
 				}
 				beverageList = menuRepo.findByIds(myBeverageIdList);	
-			}			
-			
-			// 구매내역
+			}
+
+            // MyMenu - 음식
+            List<MyFood> myFoodList = mRepo.findByUserIdFood(userDetail.getUser().getId());
+            List<Food> foodList = new ArrayList<>();
+            if(myFoodList.size() > 0) {
+                List<Integer> myFoodIdList = new ArrayList<>();
+                for (MyFood myFood : myFoodList) {
+                    myFoodIdList.add(myFood.getFoodId());
+                }
+                foodList = menuRepo.findByFoodIds(myFoodIdList);
+            }
+
+            // 구매내역
 			List<Trade> tradeList = mRepo.findTradeLog(userDetail.getUser().getId());
 			
 			HashMap<String, Object> mypageDTO = new HashMap<>();
 			mypageDTO.put("myCard", myCard);
 			mypageDTO.put("myCoffeeList", coffeeList);
 			mypageDTO.put("myBeverageList", beverageList);
+			mypageDTO.put("myFoodList", foodList);
 			mypageDTO.put("tradeList", tradeList);
 			
 			return mypageDTO;
@@ -146,6 +152,21 @@ public class AMyPageController {
 		
 		return "notlogin";
 	}
+
+    @PostMapping("/save_food")
+    public String mypageSaveFood(@AuthenticationPrincipal MyUserDetails userDetail, MyFood myFood) {
+        if(userDetail != null) {
+            myFood.setUserId(userDetail.getUser().getId());
+            int num = mRepo.AfindMyFood(myFood);
+            if(num>0) {
+                return "0";
+            }
+            mRepo.foodSave(myFood.getFoodId(), userDetail.getUser().getId(), myFood.getFoodName(), myFood.getPrice());
+            return "1";
+        }
+
+        return "notlogin";
+    }
 	
 	
 }

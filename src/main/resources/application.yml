@@ -1,6 +1,6 @@
 #스페이스 규칙 잘지켜야한다.
 server:
-  port: 8080
+  port: 7979
   servlet:
     context-path: /
     
@@ -11,16 +11,17 @@ spring:
       suffix: .jsp
 
   datasource:
-    url: jdbc:mysql://localhost:3306/starbucks?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://49.247.193.222:3306/starbucks?serverTimezone=Asia/Seoul&characterEncoding=utf8
+
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: starbucks
-    password: bitc5600
+    username: root
+    password: rkdmfdl0070
     
 #파일업로드  
   servlet:
     multipart:
       enabled: true
-      max-file-size: 2MB            
+      max-file-size: 10MB
   
   http:
     encoding:
@@ -36,6 +37,6 @@ spring:
 
 #파일 저장할 경로 git pull할때마다 자기주소로 바꿔야 에러안남
 file:
-  path: /home/ubuntu/upload/
+  path: E:\git\springboot-mybatis-starbucks\src\main\resources\static\images
           
 

@@ -5,7 +5,7 @@
 <!-- repository 패키지 경로.내xml파일명Repository 로생성 -->
 <mapper namespace="com.cos.starbucks.repository.UserRepository">
 	<select id="findByUsername" resultType="com.cos.starbucks.model.User">
-		select * from User where username = #{username}
+		select * from user where username = #{username}
 	</select>
 	
 	<select id="findAll" resultType="com.cos.starbucks.model.User">
@@ -13,7 +13,7 @@
 	</select>
 	
 	<select id="findByProviderAndProviderId" resultType="com.cos.starbucks.model.User">
-		select * from User where provider = #{provider} AND providerId = #{providerId}
+		select * from user where provider = #{provider} AND providerId = #{providerId}
 	</select>
 	
 	<select id="findSum" resultType="Integer">
@@ -56,7 +56,7 @@
 
 	<!-- 안드로이드 -->
 	<select id="findById" resultType="com.cos.starbucks.model.User">
-		select * from User where Id = #{id}
+		select * from user where Id = #{id}
 	</select>
 	
 </mapper>

@@ -54,6 +54,14 @@
 				#{item}
 			</foreach>
 	</select>
+
+    <select id="findByFoodIds" resultType="com.cos.starbucks.model.Food">
+        select * from food
+        where id in
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
 	
 	<select id="findAllCard" resultType="com.cos.starbucks.model.Card">
 		select * from card;
