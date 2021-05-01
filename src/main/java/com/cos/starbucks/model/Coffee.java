@@ -16,6 +16,7 @@ public class Coffee {
 	private String detail;
 	private String image;
 	private int price;
+	private String kind;
 	
 	private String roast;
 	private String flavor;

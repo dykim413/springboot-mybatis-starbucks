@@ -47,7 +47,8 @@ public class AMyPageController {
 				for (MyCoffee myCoffee : myCoffeeList) {
 					myCoffeeIdList.add(myCoffee.getCoffeeId());
 				}
-				coffeeList = cRepo.findByIds(myCoffeeIdList);	
+				coffeeList = cRepo.findByIds(myCoffeeIdList);
+				coffeeList.forEach( item -> item.setKind("coffee") );
 			}
 			
 			// MyMenu - 음료
@@ -58,7 +59,8 @@ public class AMyPageController {
 				for (MyBeverage myBeverage : myBeverageList) {
 					myBeverageIdList.add(myBeverage.getBeverageId()); 
 				}
-				beverageList = menuRepo.findByIds(myBeverageIdList);	
+				beverageList = menuRepo.findByIds(myBeverageIdList);
+				beverageList.forEach( item -> item.setKind("beverage"));
 			}
 
             // MyMenu - 음식
@@ -70,6 +72,7 @@ public class AMyPageController {
                     myFoodIdList.add(myFood.getFoodId());
                 }
                 foodList = menuRepo.findByFoodIds(myFoodIdList);
+                foodList.forEach( item -> item.setKind("food") );
             }
 
             // 구매내역

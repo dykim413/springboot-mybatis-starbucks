@@ -17,4 +17,5 @@ public class MyFood {
     private String foodName;
     private int price;
     private Timestamp createDate;
+    private String kind;
 }

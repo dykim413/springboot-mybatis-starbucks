@@ -10,14 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Food {
-
 	private int id;
 	private String name;
 	private String image;
 	private int price;
 	private Timestamp createDate;
-	
 	private String category;
-	
-
+    private String kind;
 }

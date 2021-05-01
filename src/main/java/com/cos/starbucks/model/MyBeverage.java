@@ -17,4 +17,5 @@ public class MyBeverage {
 	private int userId;
 	private int price;
 	private Timestamp createDate;
+    private String kind;
 }

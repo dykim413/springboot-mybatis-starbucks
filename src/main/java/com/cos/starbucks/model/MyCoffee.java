@@ -17,4 +17,5 @@ public class MyCoffee {
 	private String coffeeName;
 	private int price;
 	private Timestamp createDate;
+    private String kind;
 }
